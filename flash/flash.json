@@ -1,0 +1,495 @@
+{
+    "flash": {
+        "commands": [
+            {
+                "args": "oem verified", 
+                "description": "Unlock device", 
+                "mandatory": true, 
+                "restrict": [
+                    "update"
+                ], 
+                "retry": 2, 
+                "timeout": 60000, 
+                "tool": "fastboot"
+            }, 
+            {
+                "args": "flash bootloader ${bootloader}", 
+                "description": "Writing EFI System Partition", 
+                "mandatory": true, 
+                "restrict": [
+                    "update"
+                ], 
+                "retry": 2, 
+                "timeout": 60000, 
+                "tool": "fastboot"
+            }, 
+            {
+                "args": "oem rm /ESP/BIOSUPDATE.fv", 
+                "description": "Deleting BIOS capsule file", 
+                "group": "delete_capsule", 
+                "mandatory": true, 
+                "restrict": [
+                    "update"
+                ], 
+                "retry": 2, 
+                "timeout": 60000, 
+                "tool": "fastboot"
+            }, 
+            {
+                "args": "flash system ${system}", 
+                "description": "Flashing system partition", 
+                "mandatory": true, 
+                "restrict": [
+                    "update"
+                ], 
+                "retry": 2, 
+                "timeout": 600000, 
+                "tool": "fastboot"
+            }, 
+            {
+                "args": "flash boot ${boot}", 
+                "description": "Flashing boot partition", 
+                "mandatory": true, 
+                "restrict": [
+                    "update"
+                ], 
+                "retry": 2, 
+                "timeout": 60000, 
+                "tool": "fastboot"
+            }, 
+            {
+                "args": "flash recovery ${recovery}", 
+                "description": "Flashing recovery partition", 
+                "mandatory": true, 
+                "restrict": [
+                    "update"
+                ], 
+                "retry": 2, 
+                "timeout": 60000, 
+                "tool": "fastboot"
+            }, 
+            {
+                "args": "continue", 
+                "description": "Boot to main OS", 
+                "mandatory": true, 
+                "restrict": [
+                    "update"
+                ], 
+                "retry": 2, 
+                "timeout": 60000, 
+                "tool": "fastboot"
+            }, 
+            {
+                "args": "flash fw_stage2_osdnx ${firmware}", 
+                "description": "Flashing fw_stage2 image", 
+                "mandatory": false, 
+                "restrict": [
+                    "recover",
+					"restore_EFI",
+                    "blank"
+                ], 
+                "retry": 2, 
+                "timeout": 60000, 
+                "tool": "fastboot"
+            }, 
+            {
+                "description": "Leave time to reboot into OS DnX mode", 
+                "duration": 5000, 
+                "mandatory": true, 
+                "restrict": [
+                    "recover", 
+					"restore_EFI",
+                    "blank"
+                ], 
+                "retry": 2, 
+                "timeout": 5000, 
+                "tool": "sleep"
+            }, 
+            {
+                "description": "Wait for device to enumerate in dnx_os", 
+                "mandatory": true, 
+                "restrict": [
+                    "recover", 
+					"restore_EFI",
+                    "blank"
+                ], 
+                "retry": 2, 
+                "state": "dnx_os", 
+                "timeout": 60000, 
+                "tool": "waitForDevice"
+            }, 
+            {
+                "args": "flash osloader ${loader}", 
+                "description": "Flashing osloader image", 
+                "mandatory": true, 
+                "restrict": [
+                    "recover", 
+					"restore_EFI",
+                    "blank"
+                ], 
+                "retry": 2, 
+                "timeout": 60000, 
+                "tool": "fastboot"
+            }, 
+            {
+                "args": "boot ${loader}", 
+                "description": "Uploading dummy image", 
+                "mandatory": true, 
+                "restrict": [
+                    "recover", 
+					"restore_EFI",
+                    "blank"
+                ], 
+                "retry": 2, 
+                "timeout": 60000, 
+                "tool": "fastboot"
+            }, 
+            {
+                "description": "Leave time to the BIOS to clear the USB stack", 
+                "duration": 500, 
+                "mandatory": true, 
+                "restrict": [
+                    "recover", 
+					"restore_EFI",
+                    "blank"
+                ], 
+                "retry": 2, 
+                "timeout": 500, 
+                "tool": "sleep"
+            }, 
+            {
+                "description": "Wait for device to enumerate in pos", 
+                "mandatory": true, 
+                "restrict": [
+                    "recover", 
+					"restore_EFI",
+                    "blank"
+                ], 
+                "retry": 2, 
+                "state": "pos", 
+                "timeout": 60000, 
+                "tool": "waitForDevice"
+            }, 
+            {
+                "args": "oem unlock", 
+                "description": "Unlock device", 
+                "mandatory": true, 
+                "restrict": [
+                    "recover", 
+					"restore_EFI",
+                    "blank"
+                ], 
+                "retry": 2, 
+                "timeout": 60000, 
+                "tool": "fastboot"
+            }, 
+            {
+                "args": "flash oemvars ${oemvars}", 
+                "description": "Setting OEM Variables", 
+                "mandatory": true, 
+                "restrict": [
+                    "recover", 
+                    "blank"
+                ], 
+                "retry": 2, 
+                "timeout": 60000, 
+                "tool": "fastboot"
+            }, 
+            {
+                "args": "flash gpt ${gpt}", 
+                "description": "Creating partition table", 
+                "mandatory": true, 
+                "restrict": [
+                    "recover", 
+                    "blank"
+                ], 
+                "retry": 2, 
+                "timeout": 60000, 
+                "tool": "fastboot"
+            }, 
+            {
+                "args": "flash bootloader ${bootloader}", 
+                "description": "Writing EFI System Partition", 
+                "mandatory": true, 
+                "restrict": [
+                    "recover", 
+					"restore_EFI",
+                    "blank"
+                ], 
+                "retry": 2, 
+                "timeout": 60000, 
+                "tool": "fastboot"
+            }, 
+            {
+                "args": "oem rm /ESP/BIOSUPDATE.fv", 
+                "description": "Deleting BIOS capsule file", 
+                "group": "delete_capsule", 
+                "mandatory": true, 
+                "restrict": [
+                    "recover", 
+					"restore_EFI",
+                    "blank"
+                ], 
+                "retry": 2, 
+                "timeout": 60000, 
+                "tool": "fastboot"
+            }, 
+            {
+                "args": "flash ifwi ${afu}", 
+                "description": "Flashing AFU", 
+                "group": "flash_AFU", 
+                "mandatory": true, 
+                "restrict": [
+                    "recover", 
+                    "blank"
+                ], 
+                "retry": 2, 
+                "timeout": 60000, 
+                "tool": "fastboot"
+            }, 
+            {
+                "args": "erase misc", 
+                "description": "Erasing misc partition", 
+                "mandatory": true, 
+                "restrict": [
+                    "recover", 
+                    "blank"
+                ], 
+                "retry": 2, 
+                "timeout": 60000, 
+                "tool": "fastboot"
+            }, 
+            {
+                "args": "erase persistent", 
+                "description": "Erasing persistent partition", 
+                "mandatory": true, 
+                "restrict": [
+                    "recover", 
+                    "blank"
+                ], 
+                "retry": 2, 
+                "timeout": 60000, 
+                "tool": "fastboot"
+            }, 
+            {
+                "args": "erase metadata", 
+                "description": "Erasing metadata partition", 
+                "mandatory": true, 
+                "restrict": [
+                    "recover", 
+                    "blank"
+                ], 
+                "retry": 2, 
+                "timeout": 60000, 
+                "tool": "fastboot"
+            }, 
+            {
+                "args": "format config", 
+                "description": "Formating config partition", 
+                "mandatory": true, 
+                "restrict": [
+                    "recover", 
+                    "blank"
+                ], 
+                "retry": 2, 
+                "timeout": 60000, 
+                "tool": "fastboot"
+            }, 
+            {
+                "args": "format cache", 
+                "description": "Formating cache partition", 
+                "mandatory": true, 
+                "restrict": [
+                    "recover", 
+                    "blank"
+                ], 
+                "retry": 2, 
+                "timeout": 60000, 
+                "tool": "fastboot"
+            }, 
+            {
+                "args": "flash system ${system}", 
+                "description": "Flashing system partition", 
+                "mandatory": true, 
+                "restrict": [
+                    "recover", 
+                    "blank"
+                ], 
+                "retry": 2, 
+                "timeout": 600000, 
+                "tool": "fastboot"
+            }, 
+            {
+                "args": "flash boot ${boot}", 
+                "description": "Flashing boot partition", 
+                "mandatory": true, 
+                "restrict": [
+                    "recover", 
+                    "blank"
+                ], 
+                "retry": 2, 
+                "timeout": 60000, 
+                "tool": "fastboot"
+            }, 
+            {
+                "args": "flash recovery ${recovery}", 
+                "description": "Flashing recovery partition", 
+                "mandatory": true, 
+                "restrict": [
+                    "recover", 
+                    "blank"
+                ], 
+                "retry": 2, 
+                "timeout": 60000, 
+                "tool": "fastboot"
+            }, 
+            {
+                "args": "oem verified", 
+                "description": "Set device to Verified state", 
+                "mandatory": true, 
+                "restrict": [
+                    "recover", 
+					"restore_EFI",
+                    "blank"
+                ], 
+                "retry": 2, 
+                "timeout": 60000, 
+                "tool": "fastboot"
+            }, 
+            {
+                "args": "format data", 
+                "description": "Formating data partition", 
+                "mandatory": true, 
+                "restrict": [
+                    "recover", 
+                    "blank"
+                ], 
+                "retry": 2, 
+                "timeout": 60000, 
+                "tool": "fastboot"
+            }, 
+            {
+                "args": "continue", 
+                "description": "Boot to main OS", 
+                "mandatory": true, 
+                "restrict": [
+                    "recover", 
+					"restore_EFI",
+                    "blank"
+                ], 
+                "retry": 2, 
+                "timeout": 60000, 
+                "tool": "fastboot"
+            }
+        ], 
+        "configurations": {
+            "blank": {
+                "brief": "Erase the tablet and flash all partitions, including factory", 
+                "description": "Erase all content, rewrite partition table and flash all partitions", 
+                "groupsState": {
+                    "delete_capsule": false, 
+                    "flash_AFU": false
+                }, 
+                "name": "blank", 
+                "startState": "dnx_pos"
+            }, 
+            "recover": {
+                "brief": "Erase the tablet and flash all partitions", 
+                "description": "Erase all content, rewrite partition table and flash all partitions", 
+                "groupsState": {
+                    "delete_capsule": false, 
+                    "flash_AFU": false
+                }, 
+                "name": "recover", 
+                "startState": "dnx_pos"
+            }, 
+            "update": {
+                "brief": "update the tablet to new release", 
+                "default": true, 
+                "description": "update the tablet to new release", 
+                "groupsState": {
+                    "delete_capsule": false
+                }, 
+                "name": "update", 
+                "startState": "pos"
+            },
+			"restore_EFI": {
+				"brief": "restore only the EFI partition",
+				"description": "Restore the original content of the EFI boot partition",
+				"groupsState": {
+					"delete_capsule": false
+				},
+				"name": "restore_EFI",
+				"startState": "dnx_pos"
+			}
+        }, 
+        "groups": {
+            "delete_capsule": {
+                "description": "Delete BIOS capsule file from the ESP partition", 
+                "name": "Delete BIOS capsule"
+            }, 
+            "flash_AFU": {
+                "description": "Flashing AFU", 
+                "name": "Flash AFU"
+            }
+        }, 
+        "osplatform": "android", 
+        "parameters": {
+            "afu": {
+                "description": "afu.bin", 
+                "name": "afu", 
+                "type": "file", 
+                "value": "afu.bin"
+            }, 
+            "boot": {
+                "description": "boot.img", 
+                "name": "boot", 
+                "type": "file", 
+                "value": "boot.img"
+            }, 
+            "bootloader": {
+                "description": "bootloader", 
+                "name": "bootloader", 
+                "type": "file", 
+                "value": "bootloader"
+            }, 
+            "firmware": {
+                "description": "firmware.bin", 
+                "name": "firmware", 
+                "type": "file", 
+                "value": "firmware.bin"
+            }, 
+            "gpt": {
+                "description": "gpt.bin", 
+                "name": "gpt", 
+                "type": "file", 
+                "value": "gpt.bin"
+            }, 
+            "loader": {
+                "description": "loader.efi", 
+                "name": "loader", 
+                "type": "file", 
+                "value": "loader.efi"
+            }, 
+            "oemvars": {
+                "description": "oemvars.txt", 
+                "name": "oemvars", 
+                "type": "file", 
+                "value": "oemvars.txt"
+            }, 
+            "recovery": {
+                "description": "recovery.img", 
+                "name": "recovery", 
+                "type": "file", 
+                "value": "recovery.img"
+            }, 
+            "system": {
+                "description": "system.img", 
+                "name": "system", 
+                "type": "file", 
+                "value": "system.img"
+            }
+        }, 
+        "version": "2.0"
+    }
+}
